@@ -12,7 +12,9 @@ st.title("Examples")
 with st.sidebar:
     st.header("Configuration")
     selected_api = (
-        "pyecharts" if st.toggle("Use PyECharts API", value=False) else "echarts"
+        "pyecharts"
+        if st.toggle("Use PyECharts API", value=False, key="pyecharts", bind="query-params")
+        else "echarts"
     )
 
     demos_by_category = (
@@ -22,12 +24,16 @@ with st.sidebar:
     selected_category = st.selectbox(
         label="Category",
         options=list(demos_by_category.keys()),
+        key="ex_category",
+        bind="query-params",
     )
 
     demos_in_category = demos_by_category[selected_category]
     selected_demo = st.selectbox(
         label="Demo",
         options=list(demos_in_category.keys()),
+        key="ex_demo",
+        bind="query-params",
     )
 
     demo, url = demos_in_category[selected_demo]

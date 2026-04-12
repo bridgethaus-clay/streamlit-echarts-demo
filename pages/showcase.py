@@ -2,13 +2,6 @@ import streamlit as st
 import polars as pl
 from streamlit_echarts import st_echarts, JsCode
 
-# Page Configuration
-st.set_page_config(
-    page_title="ECharts Gallery",
-    page_icon=":material/bar_chart:",
-    layout="wide",
-)
-
 # --- CONSTANTS ---
 PRIORITIES = ["Critical", "High", "Medium", "Low"]
 
@@ -41,12 +34,22 @@ with st.sidebar:
         "Reporting Period",
         ["1 Month", "3 Months", "6 Months", "12 Months", "24 Months", "All Time"],
         index=3,
+        key="period",
+        bind="query-params",
     )
     selected_markets = st.multiselect(
-        "Market", options=sorted(df["market"].unique().to_list()), default=[]
+        "Market",
+        options=sorted(df["market"].unique().to_list()),
+        default=[],
+        key="market",
+        bind="query-params",
     )
     selected_categories = st.multiselect(
-        "Category", options=sorted(df["category"].unique().to_list()), default=[]
+        "Category",
+        options=sorted(df["category"].unique().to_list()),
+        default=[],
+        key="category",
+        bind="query-params",
     )
     # Sub-category options depend on selected categories
     if selected_categories:
@@ -58,10 +61,17 @@ with st.sidebar:
     else:
         sub_cat_options = sorted(df["sub_category"].unique().to_list())
     selected_sub_categories = st.multiselect(
-        "Sub-Category", options=sub_cat_options, default=[]
+        "Sub-Category",
+        options=sub_cat_options,
+        default=[],
+        key="sub_category",
+        bind="query-params",
     )
     selected_segment = st.selectbox(
-        "Customer Segment", options=["All"] + sorted(df["segment"].unique().to_list())
+        "Customer Segment",
+        options=["All"] + sorted(df["segment"].unique().to_list()),
+        key="segment",
+        bind="query-params",
     )
 
 # --- FILTER LOGIC ---

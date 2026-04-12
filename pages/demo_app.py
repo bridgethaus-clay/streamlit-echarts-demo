@@ -654,7 +654,10 @@ st.title("API Guide")
 with st.sidebar:
     st.title(":material/book: Table of Contents")
     selected = st.selectbox(
-        "Choose a section", list(SECTIONS.keys()), key="api_guide_section"
+        "Choose a section",
+        list(SECTIONS.keys()),
+        key="section",
+        bind="query-params",
     )
 
 SECTIONS[selected]()
